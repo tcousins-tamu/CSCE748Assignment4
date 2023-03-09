@@ -159,9 +159,10 @@ if __name__ == '__main__':
     outputDir = '../Results/'
     
     # False for source gradient, true for mixing gradients.
+    isMix = True
     #This has been changed slightly in my implementation, as speciftying a non 0
     #Alpha is equilvalent 
-    alpha = .5
+    alpha = 1
 
     # Source offsets in target
     offsets = [[210, 10], [10, 28], [140, 80], [-40, 90], [60, 100], [20, 20], [-28, 88], [-50,-50]]
@@ -185,12 +186,18 @@ if __name__ == '__main__':
         ### The main part of the code ###
     
         # Implement the PoissonBlend function
-        poissonOutput = PoissonBlend(source, mask, target, alpha)
+        if (isMix):
+            poissonOutput = PoissonBlend(source, mask, target, alpha)
+            # Writing the result  
+            if alpha==1:
+                plt.imsave("{}poisson_{}.jpg".format(outputDir, str(index+1).zfill(2)), poissonOutput)
+            else:
+                plt.imsave("{}poisson_{}_Mixing.jpg".format(outputDir, str(index+1).zfill(2)), poissonOutput)
+
+
+        #Used for the naive output
+        else:
+            pyramidOutput = PyramidBlend(source, mask, target)
+            plt.imsave("{}naive_{}.jpg".format(outputDir, str(index+1).zfill(2)), pyramidOutput)
 
         
-        # Writing the result
-                
-        if alpha==1:
-            plt.imsave("{}poisson_{}.jpg".format(outputDir, str(index+1).zfill(2)), poissonOutput)
-        else:
-            plt.imsave("{}poisson_{}_Mixing.jpg".format(outputDir, str(index+1).zfill(2)), poissonOutput)

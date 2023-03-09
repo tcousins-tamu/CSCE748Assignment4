@@ -7,5 +7,6 @@ The *Images* directory contains all of the image masks, target images, and sourc
 The *Results* directory contains all of the outputs from the program when it is run
 
 # <ins> Running Instructions </ins>
-Light modifications have been made over the original code. Instead of an "isMix" parameter, gradient mixes are made by adjusting the "alpha" parameter within the program. This change was made to adjust the Gradient Mix at will.
-This change is reflected in the PoissonBlend and matrixParameters functions. The other large change is the addition of the matrixParameters function, which is used to create the parameters for constructing the sparse matrix used.
+Light modifications have been made over the original code. The "IsMix" parameter is used to toggle between Naive and Poisson implementations.
+Additionally, for the Poisson implementation, an alpha parameter was added to adjust the percentage of background information maintained.
+The other large change is the addition of the matrixParameters function, which is used to create the parameters for constructing the sparse matrix used.
