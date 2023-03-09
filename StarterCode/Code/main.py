@@ -83,7 +83,7 @@ def matrixParameters(source, mask, target, alpha = 1):
     for row in range(target.shape[0]):
         for col in range(target.shape[1]):
             #The mask may be 3 Dimensionsal, however we only want white, which is 1,1,1
-            if mask[row, col, 0]<1: # I do not like that I had to add the 0 here, future iterations will take mask as 1D
+            if mask[row, col, 0]<.5: # I do not like that I had to add the 0 here, future iterations will take mask as 1D
                 #These indices that are not used will have 1 in the matrix
                 Cols.extend([cnt])
                 Rows.extend([cnt])
@@ -164,7 +164,7 @@ if __name__ == '__main__':
     alpha = .5
 
     # Source offsets in target
-    offsets = [[210, 10], [10, 28], [140, 80], [-40, 90], [60, 100], [20, 20], [-28, 88]]
+    offsets = [[210, 10], [10, 28], [140, 80], [-40, 90], [60, 100], [20, 20], [-28, 88], [-50,-50]]
 
     # main area to specify files and display blended image
     for index in range(len(offsets)):
@@ -175,6 +175,9 @@ if __name__ == '__main__':
         mask = np.ones_like(maskOriginal)
         mask[maskOriginal < 0.5] = 0
 
+        # if mask.shape!=source.shape:
+        #     mask=np.resize(mask, source.shape)
+        
         # Align the source and mask using the provided offest
         source, mask = AlignImages(mask, source, target, offsets[index])
 
